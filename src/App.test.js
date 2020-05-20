@@ -16,7 +16,6 @@ Enzyme.configure({ adapter: new EnzymeAdapter() })
 
 const setup = (props = {}, state = null) => {
   const wrapper = shallow(<App {...props} />)
-  console.log(state)
   if (state) wrapper.setState(state);
   return wrapper
 }
@@ -67,4 +66,30 @@ test('clicking button increment the counter display ', () => {
 
   const counterDisplay = findByTestAttr(wrapper, 'counter-display')
   expect(counterDisplay.text()).toContain(counter + 1)
+})
+
+test('clicking button decrement the counter display', () => {
+  const counter = 8;
+  const wrapper = setup(null, { counter })
+
+  const decremente = findByTestAttr(wrapper, 'decrement-counter')
+  decremente.simulate('click')
+
+  const counterDisplay = findByTestAttr(wrapper, 'counter-display')
+
+  expect(counterDisplay.text()).toContain(counter - 1)
+})
+
+test('Counter can\'t be less than 0', () => {
+  const counter = 0;
+  const error = null;
+
+  const wrapper = setup(null, { counter, error });
+  console.log(wrapper)
+
+  const decremente = findByTestAttr(wrapper, 'decrement-counter');
+  decremente.simulate('click');
+
+  expect(wrapper.state("error")).toBe("Can't decrement than zero")
+
 })
