@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 
 
+const h2Style = {
+  fontSize: '15px',
+  color: 'red'
+}
 
 class App extends Component {
   constructor(props) {
@@ -41,7 +45,7 @@ class App extends Component {
         <button data-test='decrement-counter' onClick={this.decrement}>
           Decrement Counter
         </button>
-        <h2 data-test='display-error'>{
+        <h2 data-test='display-error' style={h2Style}>{
           this.state.error ? this.state.error : this.state.error
         }</h2>
       </div>
