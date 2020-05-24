@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Alert } from '@material-ui/lab';
 
 /**
  * Functional react component for congratularoty message.
@@ -15,7 +16,7 @@ const Congrats = (props) => {
         return (
             <div data-test='component-congrats'>
                 <span data-test='congrats-message'>
-                    Congratulaions! You guessed the word!
+                    <Alert severity="success">Congratulaions! You guessed the word!</Alert>
                 </span>
             </div>
         )

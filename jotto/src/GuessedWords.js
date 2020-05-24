@@ -1,14 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import { Table, TableRow, TableCell, TableHead, TableContainer, Paper, TableBody } from '@material-ui/core';
-import { Container } from '@material-ui/core';
+import {
+    Table,
+    TableRow,
+    TableCell,
+    TableHead,
+    TableContainer,
+    Paper,
+    TableBody,
+    Typography,
+    withStyles
+} from '@material-ui/core';
+
+const StyledTableCell = withStyles((theme) => ({
+    head: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    body: {
+        fontSize: 14,
+    },
+}))(TableCell);
+
 
 const GuessedWords = (props) => {
     let contents
     if (props.guessedWords.length === 0) {
         contents = (
-            <span data-test='guess-instructions'>
-                Try to guess the secret word!
+            <span data-test='guess-instructions' >
+                <Typography variant='h6'>Try to guess the secret word!</Typography>
             </span>
         );
     } else {
@@ -21,14 +41,14 @@ const GuessedWords = (props) => {
 
         contents = (
 
-            <Container data-test='guessed-words' maxWidth="sm">
-                <h3>Guessed Words</h3>
+            <div data-test='guessed-words'>
+                <h3 style={{ textAlign: 'center' }}>Guessed Words</h3>
                 <TableContainer component={Paper}>
                     <Table aria-label="a dense table">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">Guess</TableCell>
-                                <TableCell align="center">Matching Letters</TableCell>
+                                <StyledTableCell align="center">Guess</StyledTableCell>
+                                <StyledTableCell align="center">Matching Letters</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -36,7 +56,7 @@ const GuessedWords = (props) => {
                         </TableBody>
                     </Table>
                 </TableContainer>
-            </Container>
+            </div >
 
         )
     }
