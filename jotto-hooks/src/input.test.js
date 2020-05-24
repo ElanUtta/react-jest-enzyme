@@ -4,28 +4,34 @@ import { Input } from './input';
 
 import { findByTestAttr, checkProps } from './test/testUtils'
 
-const setup = (props = { secretWord: "" }) => {
+const setup = (props = { secretWord: "party" }) => {
     return shallow(<Input {...props} />)
 }
 
 test('does not throw warning with expected props ', () => {
     checkProps(Input, { secretWord: 'party' });
-})
+});
 
-describe('Tests to receive the word', () => {
-    test('render withour error', () => {
+test('render withour error', () => {
+    const wrapper = setup();
+    const inputComponent = findByTestAttr(wrapper, 'component-imput');
+    expect(inputComponent.length).toBe(1);
+});
+
+describe('state controlled input field', () => {
+    test('state updates with value of input box upon change', () => {
+        const mockSetCurrentGuess = jest.fn();
+        React.useState = jest.fn(() => ["", mockSetCurrentGuess]);
+
+        console.log(React.useState)
+
         const wrapper = setup();
-        const inputComponent = findByTestAttr(wrapper, 'component-imput');
-        expect(inputComponent.length).toBe(1);
-    });
+        const inputBox = findByTestAttr(wrapper, 'input-box');
 
-    test('The word have some leter', () => {
-        const wrapper = setup({ secretWord: 'party' });
-        const inputComponent = findByTestAttr(wrapper, 'component-imput');
-        expect(inputComponent.text()).toBe('');
-    });
+        const mockEvent = { target: { value: 'train' } };
+        inputBox.simulate("change", mockEvent);
 
-
-
+        expect(mockSetCurrentGuess).toHaveBeenCalledWith('train');
+    })
 })
 
